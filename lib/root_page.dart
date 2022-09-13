@@ -13,10 +13,16 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
+  int _currentIndex = 0;
+  final List<String> _titles = ["首页", "入库", "出库", "库存"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_titles[_currentIndex]),
+        centerTitle: true,
+      ),
       body: PageView(
         controller: _pageController,
         children: [
@@ -25,39 +31,66 @@ class _RootPageState extends State<RootPage> {
           OutStorePage(),
           StoragePage(),
         ],
+        onPageChanged: (value) => {
+          setState(() {
+            _currentIndex = value;
+          })
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: [
-            IconButton(
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: IconButton(
                 onPressed: () {
-                  setState(() {
-                    _pageController.jumpToPage(0);
-                  });
+                  selectBottomButton(0);
                 },
-                icon: Image.asset("assets/images/home.png")),
-            IconButton(
+                icon: Image.asset(
+                  "assets/images/home.png",
+                ),
+                selectedIcon: Image.asset("assets/images/home_active.png"),
+                isSelected: _currentIndex == 0,
+              ),
+            ),
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: IconButton(
                 onPressed: () {
-                  setState(() {
-                    _pageController.jumpToPage(1);
-                  });
+                  selectBottomButton(1);
                 },
-                icon: Image.asset("assets/images/in_store.png")),
+                icon: Image.asset("assets/images/in_store.png"),
+                selectedIcon: Image.asset("assets/images/in_store_active.png"),
+                isSelected: _currentIndex == 1,
+              ),
+            ),
             const SizedBox(),
-            IconButton(
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: IconButton(
                 onPressed: () {
-                  setState(() {
-                    _pageController.jumpToPage(2);
-                  });
+                  selectBottomButton(2);
                 },
-                icon: Image.asset("assets/images/out_store.png")),
-            IconButton(
+                icon: Image.asset("assets/images/out_store.png"),
+                selectedIcon: Image.asset("assets/images/out_store_active.png"),
+                isSelected: _currentIndex == 2,
+              ),
+            ),
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: IconButton(
                 onPressed: () {
-                  setState(() {
-                    _pageController.jumpToPage(3);
-                  });
+                  selectBottomButton(3);
                 },
-                icon: Image.asset("assets/images/goods.png")),
+                icon: Image.asset("assets/images/goods.png"),
+                selectedIcon: Image.asset("assets/images/goods_active.png"),
+                isSelected: _currentIndex == 3,
+              ),
+            ),
           ],
           mainAxisAlignment: MainAxisAlignment.spaceAround,
         ),
@@ -66,8 +99,16 @@ class _RootPageState extends State<RootPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(Icons.add),
+        shape: const CircleBorder(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+
+  void selectBottomButton(int index) {
+    setState(() {
+      _currentIndex = index;
+      _pageController.jumpToPage(index);
+    });
   }
 }
