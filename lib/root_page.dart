@@ -38,7 +38,9 @@ class _RootPageState extends State<RootPage> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
               width: 40,
@@ -92,14 +94,12 @@ class _RootPageState extends State<RootPage> {
               ),
             ),
           ],
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
         ),
-        shape: CircularNotchedRectangle(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
         shape: const CircleBorder(),
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
