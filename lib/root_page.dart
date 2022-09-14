@@ -1,5 +1,7 @@
 import 'package:ewms_app/view/home.dart';
 import 'package:ewms_app/view/in_store.dart';
+import 'package:ewms_app/widget/expandable_fab.dart';
+import 'package:ewms_app/widget/sector_expandable_fab.dart';
 import 'package:flutter/material.dart';
 
 import 'view/out_store.dart';
@@ -38,7 +40,8 @@ class _RootPageState extends State<RootPage> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+        // shape: const CircularNotchedRectangle(),
+        notchMargin: -10,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -96,11 +99,51 @@ class _RootPageState extends State<RootPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        shape: const CircleBorder(),
-        child: const Icon(Icons.add),
+      floatingActionButton: SectorExpandableFab(
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: Image.asset(
+                "assets/images/in_store.png",
+                width: 20,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Image.asset(
+                "assets/images/out_store.png",
+                width: 20,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Image.asset(
+                "assets/images/goods.png",
+                width: 20,
+              )),
+        ],
       ),
+      // floatingActionButton: ExpandableFab(
+      //   distance: 112.0,
+      //   children: [
+      //     ActionButton(
+      //         onPressed: () {},
+      //         icon: Image.asset(
+      //           "assets/images/in_store.png",
+      //           width: 20,
+      //         )),
+      //     ActionButton(
+      //         onPressed: () {},
+      //         icon: Image.asset(
+      //           "assets/images/out_store.png",
+      //           width: 20,
+      //         )),
+      //     ActionButton(
+      //         onPressed: () {},
+      //         icon: Image.asset(
+      //           "assets/images/goods.png",
+      //           width: 20,
+      //         )),
+      //   ],
+      // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
