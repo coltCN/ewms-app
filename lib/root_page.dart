@@ -1,11 +1,14 @@
 import 'package:ewms_app/view/home.dart';
 import 'package:ewms_app/view/in_store.dart';
 import 'package:ewms_app/widget/expandable_fab.dart';
+import 'package:ewms_app/widget/fab/fab_bottom_app_bar.dart';
+import 'package:ewms_app/widget/fab/fab_with_icons.dart';
 import 'package:ewms_app/widget/sector_expandable_fab.dart';
 import 'package:flutter/material.dart';
 
 import 'view/out_store.dart';
 import 'view/storage.dart';
+import 'widget/fab/layout.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -39,88 +42,42 @@ class _RootPageState extends State<RootPage> {
           })
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        // shape: const CircularNotchedRectangle(),
-        notchMargin: -10,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: IconButton(
-                onPressed: () {
-                  selectBottomButton(0);
-                },
-                icon: Image.asset(
-                  "assets/images/home.png",
-                ),
-                selectedIcon: Image.asset("assets/images/home_active.png"),
-                isSelected: _currentIndex == 0,
-              ),
-            ),
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: IconButton(
-                onPressed: () {
-                  selectBottomButton(1);
-                },
-                icon: Image.asset("assets/images/in_store.png"),
-                selectedIcon: Image.asset("assets/images/in_store_active.png"),
-                isSelected: _currentIndex == 1,
-              ),
-            ),
-            const SizedBox(),
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: IconButton(
-                onPressed: () {
-                  selectBottomButton(2);
-                },
-                icon: Image.asset("assets/images/out_store.png"),
-                selectedIcon: Image.asset("assets/images/out_store_active.png"),
-                isSelected: _currentIndex == 2,
-              ),
-            ),
-            SizedBox(
-              width: 40,
-              height: 40,
-              child: IconButton(
-                onPressed: () {
-                  selectBottomButton(3);
-                },
-                icon: Image.asset("assets/images/goods.png"),
-                selectedIcon: Image.asset("assets/images/goods_active.png"),
-                isSelected: _currentIndex == 3,
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: SectorExpandableFab(
-        children: [
-          IconButton(
-              onPressed: () {},
-              icon: Image.asset(
-                "assets/images/in_store.png",
-                width: 20,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: Image.asset(
-                "assets/images/out_store.png",
-                width: 20,
-              )),
-          IconButton(
-              onPressed: () {},
-              icon: Image.asset(
-                "assets/images/goods.png",
-                width: 20,
-              )),
+      bottomNavigationBar: FABBottomAppBar(
+        // centerItemText: 'A',
+        color: Colors.grey,
+        selectedColor: Theme.of(context).primaryColor,
+        notchedShape: const CircularNotchedRectangle(),
+        onTabSelected: _selectedTab,
+        items: [
+          FABBottomAppBarItem(iconData: Icons.menu, text: 'This'),
+          FABBottomAppBarItem(iconData: Icons.layers, text: 'Is'),
+          FABBottomAppBarItem(iconData: Icons.dashboard, text: 'Bottom'),
+          FABBottomAppBarItem(iconData: Icons.info, text: 'Bar'),
         ],
       ),
+      floatingActionButton: _buildFab(context),
+      // floatingActionButton: SectorExpandableFab(
+      //   children: [
+      //     IconButton(
+      //         onPressed: () {},
+      //         icon: Image.asset(
+      //           "assets/images/in_store.png",
+      //           width: 20,
+      //         )),
+      //     IconButton(
+      //         onPressed: () {},
+      //         icon: Image.asset(
+      //           "assets/images/out_store.png",
+      //           width: 20,
+      //         )),
+      //     IconButton(
+      //         onPressed: () {},
+      //         icon: Image.asset(
+      //           "assets/images/goods.png",
+      //           width: 20,
+      //         )),
+      //   ],
+      // ),
       // floatingActionButton: ExpandableFab(
       //   distance: 112.0,
       //   children: [
@@ -154,4 +111,30 @@ class _RootPageState extends State<RootPage> {
       _pageController.jumpToPage(index);
     });
   }
+
+  Widget _buildFab(BuildContext context) {
+    final icons = [Icons.sms, Icons.mail, Icons.phone];
+    return AnchoredOverlay(
+      showOverlay: true,
+      overlayBuilder: (context, offset) {
+        return CenterAbout(
+          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+          child: FabWithIcons(
+            icons: icons,
+            onIconTapped: _selectedFab,
+          ),
+        );
+      },
+      child: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {},
+        // elevation: 2.0,
+        child: const Icon(Icons.home),
+      ),
+    );
+  }
+
+  void _selectedTab(int value) {}
+
+  void _selectedFab(int value) {}
 }

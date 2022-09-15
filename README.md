@@ -17,3 +17,6 @@ samples, guidance on mobile development, and a full API reference.
 
 ### 图标
 https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=24697
+
+### 引用
+ FABBottomAppBar：https://github.com/bizz84/bottom_bar_fab_flutter
