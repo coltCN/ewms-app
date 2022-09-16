@@ -31,6 +31,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  popup_menu: 
+    git: 
+      url: https://github.com/chinabrant/popup_menu.git
+  font_awesome_flutter: ^10.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

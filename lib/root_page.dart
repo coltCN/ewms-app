@@ -4,7 +4,9 @@ import 'package:ewms_app/widget/expandable_fab.dart';
 import 'package:ewms_app/widget/fab/fab_bottom_app_bar.dart';
 import 'package:ewms_app/widget/fab/fab_with_icons.dart';
 import 'package:ewms_app/widget/sector_expandable_fab.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:popup_menu/popup_menu.dart';
 
 import 'view/out_store.dart';
 import 'view/storage.dart';
@@ -21,6 +23,8 @@ class _RootPageState extends State<RootPage> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
   final List<String> _titles = ["首页", "入库", "出库", "库存"];
+  GlobalKey fabKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,58 +53,21 @@ class _RootPageState extends State<RootPage> {
         notchedShape: const CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         items: [
-          FABBottomAppBarItem(iconData: Icons.menu, text: 'This'),
-          FABBottomAppBarItem(iconData: Icons.layers, text: 'Is'),
-          FABBottomAppBarItem(iconData: Icons.dashboard, text: 'Bottom'),
-          FABBottomAppBarItem(iconData: Icons.info, text: 'Bar'),
+          FABBottomAppBarItem(iconData: FontAwesomeIcons.house, text: '首页'),
+          FABBottomAppBarItem(
+              iconData: FontAwesomeIcons.arrowRightToBracket, text: '入库'),
+          FABBottomAppBarItem(
+              iconData: FontAwesomeIcons.arrowRightFromBracket, text: '出库'),
+          FABBottomAppBarItem(
+              iconData: FontAwesomeIcons.boxesStacked, text: '库存'),
         ],
       ),
-      floatingActionButton: _buildFab(context),
-      // floatingActionButton: SectorExpandableFab(
-      //   children: [
-      //     IconButton(
-      //         onPressed: () {},
-      //         icon: Image.asset(
-      //           "assets/images/in_store.png",
-      //           width: 20,
-      //         )),
-      //     IconButton(
-      //         onPressed: () {},
-      //         icon: Image.asset(
-      //           "assets/images/out_store.png",
-      //           width: 20,
-      //         )),
-      //     IconButton(
-      //         onPressed: () {},
-      //         icon: Image.asset(
-      //           "assets/images/goods.png",
-      //           width: 20,
-      //         )),
-      //   ],
-      // ),
-      // floatingActionButton: ExpandableFab(
-      //   distance: 112.0,
-      //   children: [
-      //     ActionButton(
-      //         onPressed: () {},
-      //         icon: Image.asset(
-      //           "assets/images/in_store.png",
-      //           width: 20,
-      //         )),
-      //     ActionButton(
-      //         onPressed: () {},
-      //         icon: Image.asset(
-      //           "assets/images/out_store.png",
-      //           width: 20,
-      //         )),
-      //     ActionButton(
-      //         onPressed: () {},
-      //         icon: Image.asset(
-      //           "assets/images/goods.png",
-      //           width: 20,
-      //         )),
-      //   ],
-      // ),
+      floatingActionButton: FloatingActionButton(
+        shape: const StadiumBorder(),
+        key: fabKey,
+        onPressed: maxColumn,
+        child: const Icon(Icons.add),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -112,29 +79,42 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
-  Widget _buildFab(BuildContext context) {
-    final icons = [Icons.sms, Icons.mail, Icons.phone];
-    return AnchoredOverlay(
-      showOverlay: true,
-      overlayBuilder: (context, offset) {
-        return CenterAbout(
-          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
-          child: FabWithIcons(
-            icons: icons,
-            onIconTapped: _selectedFab,
-          ),
-        );
-      },
-      child: FloatingActionButton(
-        shape: const CircleBorder(),
-        onPressed: () {},
-        // elevation: 2.0,
-        child: const Icon(Icons.home),
-      ),
+  void maxColumn() {
+    PopupMenu menu = PopupMenu(
+      context: context,
+      config: const MenuConfig(
+          maxColumn: 3,
+          backgroundColor: Colors.white70,
+          lineColor: Colors.transparent),
+      items: [
+        MenuItem(
+            title: '入库',
+            image: Icon(
+              FontAwesomeIcons.fileCirclePlus,
+              color: Theme.of(context).primaryColor,
+            )),
+        MenuItem(
+            title: '出库',
+            image: Icon(
+              FontAwesomeIcons.fileCircleMinus,
+              color: Theme.of(context).primaryColor,
+            )),
+        MenuItem(
+            title: '货物',
+            image: Icon(FontAwesomeIcons.box,
+                color: Theme.of(context).primaryColor)),
+        MenuItem(
+            title: '仓库',
+            image: Icon(FontAwesomeIcons.warehouse,
+                color: Theme.of(context).primaryColor)),
+      ],
     );
+    menu.show(widgetKey: fabKey);
   }
 
-  void _selectedTab(int value) {}
+  void _selectedTab(int value) {
+    _pageController.jumpToPage(value);
+  }
 
   void _selectedFab(int value) {}
 }
