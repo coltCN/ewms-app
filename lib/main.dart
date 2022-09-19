@@ -1,4 +1,7 @@
+import 'package:ewms_app/root_page.dart';
 import 'package:ewms_app/splash_page.dart';
+import 'package:ewms_app/view/goods/add_goods.dart';
+import 'package:ewms_app/view/goods/goods.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,9 +28,19 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         useMaterial3: true,
+        inputDecorationTheme: InputDecorationTheme(
+          border: InputBorder.none,
+        ),
       ),
+      routes: {
+        "/add_goods": (context) => const AddGoodsPage(),
+        "/goods": (context) => const GoodsPage(),
+        "/splash": (context) => const Splash(),
+        "/": (context) => const RootPage(),
+      },
       debugShowCheckedModeBanner: false,
-      home: const Splash(),
+      initialRoute: "/splash",
+      // home: const Splash(),
     );
   }
 }

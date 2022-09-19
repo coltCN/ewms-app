@@ -18,7 +18,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _currentTime--;
       });
@@ -30,8 +30,10 @@ class _SplashState extends State<Splash> {
 
   void _jumpRootPage() {
     _timer?.cancel();
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => RootPage()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const RootPage()),
+        (route) => false);
   }
 
   @override
@@ -48,7 +50,7 @@ class _SplashState extends State<Splash> {
         Positioned(
           top: MediaQuery.of(context).padding.top + 10,
           right: 10,
-          child: InkWell(child: _childButton(), onTap: _jumpRootPage),
+          child: InkWell(onTap: _jumpRootPage, child: _childButton()),
         )
       ],
     ));

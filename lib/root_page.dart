@@ -1,3 +1,4 @@
+import 'package:ewms_app/view/goods/add_goods.dart';
 import 'package:ewms_app/view/home.dart';
 import 'package:ewms_app/view/in_store.dart';
 import 'package:ewms_app/widget/expandable_fab.dart';
@@ -32,6 +33,7 @@ class _RootPageState extends State<RootPage> {
         title: Text(_titles[_currentIndex]),
         centerTitle: true,
       ),
+      drawer: _buildDrawer(context),
       body: PageView(
         controller: _pageController,
         children: [
@@ -72,6 +74,42 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
+  Drawer _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: MediaQuery.removePadding(
+          context: context,
+          child: Column(
+            children: [
+              Container(
+                height: 100,
+                width: double.infinity,
+                color: Theme.of(context).primaryColor,
+                child: Center(
+                  child: Text(
+                    "库存易",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.box),
+                title: Text("商品"),
+                onTap: () {
+                  Navigator.of(context).popAndPushNamed("/goods");
+                },
+              ),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.warehouse),
+                title: Text("仓库"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          )),
+    );
+  }
+
   void selectBottomButton(int index) {
     setState(() {
       _currentIndex = index;
@@ -86,6 +124,13 @@ class _RootPageState extends State<RootPage> {
           maxColumn: 3,
           backgroundColor: Colors.white70,
           lineColor: Colors.transparent),
+      onClickMenu: (item) {
+        switch (item.menuTitle) {
+          case "货物":
+            Navigator.pushNamed(context, "/add_goods");
+            break;
+        }
+      },
       items: [
         MenuItem(
             title: '入库',
@@ -100,7 +145,7 @@ class _RootPageState extends State<RootPage> {
               color: Theme.of(context).primaryColor,
             )),
         MenuItem(
-            title: '货物',
+            title: '商品',
             image: Icon(FontAwesomeIcons.box,
                 color: Theme.of(context).primaryColor)),
         MenuItem(
