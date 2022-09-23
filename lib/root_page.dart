@@ -84,7 +84,7 @@ class _RootPageState extends State<RootPage> {
                 height: 100,
                 width: double.infinity,
                 color: Theme.of(context).primaryColor,
-                child: Center(
+                child: const Center(
                   child: Text(
                     "库存易",
                     style: TextStyle(color: Colors.white, fontSize: 20),

@@ -1,8 +1,4 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class GoodsPage extends StatefulWidget {
   const GoodsPage({super.key});
@@ -33,15 +29,31 @@ class _GoodsPageState extends State<GoodsPage> {
         children: [
           Row(
             children: [
-              Image.asset("/assets/images/no_image.png"),
+              Image.asset("assets/images/no_image.png", width: 80),
+              const SizedBox(
+                width: 10,
+              ),
               Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("商品1"),
-                    Text("商品编号："),
-                    Text("规格："),
-                    Text("条形码："),
-                    Text("库存："),
+                    Text(
+                      "商品编号：",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    Text(
+                      "规格：",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    Text(
+                      "条形码：",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    Text(
+                      "库存：",
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
                   ],
                 ),
               )
