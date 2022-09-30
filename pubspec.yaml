@@ -35,7 +35,11 @@ dependencies:
     git: 
       url: https://github.com/chinabrant/popup_menu.git
   font_awesome_flutter: ^10.2.1
-  dio: ^4.0.0
+  dio: ^4.0.4
+  bot_toast: ^4.0.3
+  easy_refresh: ^3.0.4+2
+  bruno: ^3.0.0
+  flutter_slidable: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

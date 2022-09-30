@@ -1,4 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import 'http_exception.dart';
 
@@ -32,6 +34,7 @@ class HttpInterceptor extends Interceptor {
     // 覆盖异常为自定义的异常类
     HttpException httpException = HttpException.create(err);
     err.error = httpException;
+    BotToast.showText(text: httpException.msg, contentColor: Colors.red);
 
     super.onError(err, handler);
   }

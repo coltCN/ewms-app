@@ -1,7 +1,10 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:ewms_app/root_page.dart';
 import 'package:ewms_app/splash_page.dart';
 import 'package:ewms_app/view/goods/add_goods.dart';
 import 'package:ewms_app/view/goods/goods.dart';
+import 'package:ewms_app/view/storeage/add_storage.dart';
+import 'package:ewms_app/view/storeage/storage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,11 +38,15 @@ class MyApp extends StatelessWidget {
       routes: {
         "/add_goods": (context) => const AddGoodsPage(),
         "/goods": (context) => const GoodsPage(),
+        "/storage": (context) => const StorageListPage(),
+        "/add_storage": (context) => const AddStoragePage(),
         "/splash": (context) => const Splash(),
         "/": (context) => const RootPage(),
       },
       debugShowCheckedModeBanner: false,
       initialRoute: "/splash",
+      builder: BotToastInit(),
+      navigatorObservers: [BotToastNavigatorObserver()],
       // home: const Splash(),
     );
   }

@@ -102,7 +102,7 @@ class _RootPageState extends State<RootPage> {
                 leading: Icon(FontAwesomeIcons.warehouse),
                 title: Text("仓库"),
                 onTap: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).popAndPushNamed("/storage");
                 },
               ),
             ],

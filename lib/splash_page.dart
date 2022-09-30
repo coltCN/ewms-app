@@ -12,7 +12,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   int _currentTime = 3;
-  Timer? _timer;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -28,8 +28,14 @@ class _SplashState extends State<Splash> {
     });
   }
 
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   void _jumpRootPage() {
-    _timer?.cancel();
+    _timer.cancel();
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const RootPage()),

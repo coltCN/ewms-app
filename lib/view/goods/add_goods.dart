@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:ewms_app/models/goods.dart';
 import 'package:ewms_app/services/goods_service.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,17 @@ class _AddGoodsPageState extends State<AddGoodsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final Goods _goods = Goods();
 
-  void _save() {
+  void _save(BuildContext context) {
     var form = _formKey.currentState;
     if (form!.validate()) {
       form.save();
-      GoodsService.addGoods(_goods);
+      var cancel = BotToast.showLoading();
+      GoodsService.addGoods(_goods).then((value) {
+        cancel();
+        if (value.success()) Navigator.pop(context);
+      }).onError((error, stackTrace) {
+        cancel();
+      });
     }
   }
 
@@ -30,7 +37,9 @@ class _AddGoodsPageState extends State<AddGoodsPage> {
         centerTitle: true,
         actions: [
           TextButton(
-              onPressed: _save,
+              onPressed: () {
+                _save(context);
+              },
               child: Text(
                 "保存",
                 style: TextStyle(color: Theme.of(context).primaryColor),

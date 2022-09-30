@@ -3,15 +3,17 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:ewms_app/http/http.dart';
 import 'package:ewms_app/models/goods.dart';
+import 'package:ewms_app/models/response_data.dart';
 
 class GoodsService {
   static Future getGoods({int page = 1}) async {
-    final response = await Http.get('/material/_query',
+    final resp = await Http.get('/material/_query',
         params: {'pageSize': 10, 'pageIndex': page});
-    return response['result'];
+    return ResponseData.fromJson(resp).result;
   }
 
-  static Future addGoods(Goods data) async {
-    return await Http.post("/material", data: data);
+  static Future<ResponseData> addGoods(Goods data) async {
+    final resp = await Http.post("/material", data: data);
+    return ResponseData.fromJson(resp);
   }
 }
